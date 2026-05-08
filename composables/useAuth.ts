@@ -4,6 +4,7 @@ interface User {
   phone?: string
   email?: string
   balance: number
+  username?: string
 }
 
 interface AuthState {
@@ -21,51 +22,91 @@ const authState = reactive<AuthState>({
 export const useAuth = () => {
   const config = useRuntimeConfig()
   
-  const loginWithPhone = async (phone: string, code: string) => {
+  /**
+   * 统一登录接口
+   * @param account 账号（手机号或邮箱）
+   * @param loginType 登录方式: password-密码登录, code-验证码登录
+   * @param accountType 账号类型: phone-手机号, email-邮箱
+   * @param password 密码（密码登录时必填）
+   * @param code 验证码（验证码登录时必填）
+   */
+  const login = async (
+    account: string, 
+    loginType: 'password' | 'code',
+    accountType: 'phone' | 'email',
+    password?: string,
+    code?: string
+  ) => {
     try {
-      const res = await $fetch<{ token: string; user: User }>(`${config.public.apiBaseUrl}/auth/login/phone`, {
+      const res = await $fetch<{ accessToken: string; user: User }>(`${config.public.apiBaseUrl}/auth/login`, {
         method: 'POST',
-        body: { phone, code }
+        body: { account, loginType, accountType, password, code }
       })
-      authState.token = res.token
+      authState.token = res.accessToken
       authState.user = res.user
       authState.isLoggedIn = true
       if (process.client) {
-        localStorage.setItem('token', res.token)
+        localStorage.setItem('token', res.accessToken)
       }
       return { success: true }
     } catch (error: any) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.data?.message || error.message }
     }
   }
 
-  const loginWithEmail = async (email: string, password: string) => {
+  /**
+   * 发送验证码
+   * @param account 账号（手机号或邮箱）
+   * @param type 类型: login-登录, register-注册
+   */
+  const sendVerifyCode = async (account: string, type: 'login' | 'register') => {
     try {
-      const res = await $fetch<{ token: string; user: User }>(`${config.public.apiBaseUrl}/auth/login/email`, {
+      await $fetch(`${config.public.apiBaseUrl}/auth/sendCode`, {
         method: 'POST',
-        body: { email, password }
+        body: { phoneOrEmail: account, type }
       })
-      authState.token = res.token
+      return { success: true }
+    } catch (error: any) {
+      return { success: false, error: error.data?.message || error.message }
+    }
+  }
+
+  /**
+   * 注册
+   * @param account 账号（手机号或邮箱）
+   * @param accountType 账号类型: phone-手机号, email-邮箱
+   * @param password 密码
+   * @param code 验证码
+   * @param username 用户名（可选）
+   */
+  const register = async (
+    account: string,
+    accountType: 'phone' | 'email',
+    password: string,
+    code: string,
+    username?: string
+  ) => {
+    try {
+      const res = await $fetch<{ accessToken: string; user: User }>(`${config.public.apiBaseUrl}/auth/register`, {
+        method: 'POST',
+        body: { 
+          phone: accountType === 'phone' ? account : undefined,
+          email: accountType === 'email' ? account : undefined,
+          password,
+          code,
+          username,
+          registerType: accountType
+        }
+      })
+      authState.token = res.accessToken
       authState.user = res.user
       authState.isLoggedIn = true
       if (process.client) {
-        localStorage.setItem('token', res.token)
+        localStorage.setItem('token', res.accessToken)
       }
       return { success: true }
     } catch (error: any) {
-      return { success: false, error: error.message }
-    }
-  }
-
-  const sendVerifyCode = async (phone: string) => {
-    try {
-      await $fetch(`${config.public.apiBaseUrl}/auth/send-code`, {
-        method: 'POST',
-        body: { phone }
-      })
-      return { success: true }
-    } catch (error: any) {
-      return { success: false, error: error.message }
+      return { success: false, error: error.data?.message || error.message }
     }
   }
 
@@ -84,10 +125,10 @@ export const useAuth = () => {
       if (token) {
         authState.token = token
         try {
-          const res = await $fetch<{ user: User }>(`${config.public.apiBaseUrl}/user/info`, {
+          const res = await $fetch<{ data: { user: User } }>(`${config.public.apiBaseUrl}/user/info`, {
             headers: { Authorization: `Bearer ${token}` }
           })
-          authState.user = res.user
+          authState.user = res.data.user
           authState.isLoggedIn = true
         } catch {
           logout()
@@ -100,8 +141,8 @@ export const useAuth = () => {
     user: computed(() => authState.user),
     isLoggedIn: computed(() => authState.isLoggedIn),
     token: computed(() => authState.token),
-    loginWithPhone,
-    loginWithEmail,
+    login,
+    register,
     sendVerifyCode,
     logout,
     checkAuth

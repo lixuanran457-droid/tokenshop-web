@@ -84,14 +84,14 @@
               </div>
             </div>
 
-            <!-- 登录模式切换（仅登录时显示） -->
-            <div v-if="!isRegister" class="text-center">
+            <!-- 登录模式切换（仅密码登录时显示验证码登录入口） -->
+            <div v-if="!isRegister && loginMode === 'password'" class="text-center">
               <button 
                 type="button"
                 class="text-sm text-primary-light hover:underline"
                 @click="toggleLoginMode"
               >
-                {{ loginMode === 'password' ? '使用验证码登录' : '使用密码登录' }}
+                使用验证码登录
               </button>
             </div>
 

@@ -52,8 +52,8 @@
               >
             </div>
 
-            <!-- 密码（登录时可选验证码登录则不显示） -->
-            <div v-if="!isRegister || loginMode === 'password'">
+            <!-- 密码（注册时必须 / 登录时密码模式显示） -->
+            <div v-if="isRegister || loginMode === 'password'">
               <label class="block text-sm text-white/70 mb-2">{{ isRegister ? '设置密码' : '密码' }}</label>
               <input 
                 v-model="form.password"

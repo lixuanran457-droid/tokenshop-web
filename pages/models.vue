@@ -1,14 +1,14 @@
 <template>
-  <div class="px-12 py-12 max-w-[1400px] mx-auto">
-    <h1 class="text-3xl font-bold mb-8">支持的模型</h1>
+  <div class="px-4 md:px-12 py-8 md:py-12 max-w-[1400px] mx-auto">
+    <h1 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8">支持的模型</h1>
     
     <!-- 筛选按钮 -->
-    <div class="flex gap-3 mb-8 flex-wrap">
+    <div class="flex gap-2 md:gap-3 mb-6 md:mb-8 flex-wrap">
       <button 
         v-for="filter in filters" 
         :key="filter.value"
         :class="[
-          'px-5 py-2.5 text-sm rounded-lg transition-all duration-200',
+          'px-3 md:px-5 py-2 text-xs md:text-sm rounded-lg transition-all duration-200',
           activeFilter === filter.value 
             ? 'bg-primary/30 border border-primary text-white' 
             : 'bg-white/5 border border-primary/30 text-white/70 hover:bg-primary/20 hover:border-primary/50'
@@ -20,7 +20,7 @@
     </div>
     
     <!-- 模型网格 -->
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
       <ModelCard 
         v-for="model in filteredModels" 
         :key="model.id"

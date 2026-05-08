@@ -1,33 +1,33 @@
 <template>
   <div>
     <!-- Hero区域 -->
-    <div class="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-12 py-20 relative">
-      <div class="absolute w-[800px] h-[800px] bg-radial from-primary/30 to-transparent rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <div class="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 md:px-12 py-12 md:py-20 relative">
+      <div class="absolute w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-radial from-primary/30 to-transparent rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
       
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary/40 rounded-full text-primary-light text-sm mb-8 relative">
+      <div class="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-primary/20 border border-primary/40 rounded-full text-primary-light text-xs md:text-sm mb-6 md:mb-8 relative">
         <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
         直连顶级模型 V8
       </div>
       
-      <h1 class="text-6xl font-extrabold text-center mb-6 relative">
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-center mb-4 md:mb-6 relative leading-tight">
         下一代 <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">AI 能力</span><br>
         触手可及
       </h1>
       
-      <p class="text-xl text-white/60 text-center max-w-xl leading-relaxed mb-12 relative">
+      <p class="text-sm md:text-base lg:text-xl text-white/60 text-center max-w-[90%] md:max-w-xl leading-relaxed mb-8 md:mb-12 relative">
         通过统一 API 接口，无缝访问 GPT-4、Claude、Gemini、DeepSeek 等顶级大模型。稳定、快速、值得信赖。
       </p>
       
-      <div class="flex gap-4 relative">
+      <div class="flex flex-col sm:flex-row gap-3 md:gap-4 relative w-full max-w-xs sm:max-w-none">
         <button 
-          class="px-8 py-3.5 bg-gradient-to-r from-primary to-secondary rounded-xl text-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5"
+          class="px-6 md:px-8 py-3 md:py-3.5 bg-gradient-to-r from-primary to-secondary rounded-xl text-sm md:text-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5 w-full sm:w-auto"
           @click="showLoginModal = true"
         >
           立即开始
         </button>
         <NuxtLink 
           to="/docs"
-          class="px-8 py-3.5 bg-white/10 border border-white/20 rounded-xl text-lg font-semibold hover:bg-white/15 hover:border-white/30 transition-all backdrop-blur-sm"
+          class="px-6 md:px-8 py-3 md:py-3.5 bg-white/10 border border-white/20 rounded-xl text-sm md:text-lg font-semibold hover:bg-white/15 hover:border-white/30 transition-all backdrop-blur-sm text-center w-full sm:w-auto"
         >
           查看文档
         </NuxtLink>
@@ -35,27 +35,27 @@
     </div>
 
     <!-- 特性卡片 -->
-    <div class="px-12 py-20 max-w-[1200px] mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">为什么选择 COCO CLAW</h2>
-        <p class="text-white/60">我们专注于提供最稳定、最快速的模型直连服务</p>
+    <div class="px-4 md:px-12 py-12 md:py-20 max-w-[1200px] mx-auto">
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4">为什么选择 COCO CLAW</h2>
+        <p class="text-white/60 text-sm md:text-base">我们专注于提供最稳定、最快速的模型直连服务</p>
       </div>
       
-      <div class="grid grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <div 
           v-for="feature in features" 
           :key="feature.title"
-          class="bg-white/5 border border-primary/20 rounded-2xl p-8 transition-all duration-300 hover:bg-white/8 hover:border-primary/40 hover:-translate-y-1 cursor-pointer"
+          class="bg-white/5 border border-primary/20 rounded-2xl p-5 md:p-8 transition-all duration-300 hover:bg-white/8 hover:border-primary/40 hover:-translate-y-1 cursor-pointer"
           @click="feature.action && feature.action()"
         >
           <div 
-            class="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+            class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-4 md:mb-5"
             :style="{ background: feature.bgColor }"
           >
-            <component :is="feature.icon" class="w-6 h-6" :style="{ color: feature.iconColor }" />
+            <component :is="feature.icon" class="w-5 h-5 md:w-6 md:h-6" :style="{ color: feature.iconColor }" />
           </div>
-          <h3 class="text-lg font-semibold mb-3">{{ feature.title }}</h3>
-          <p class="text-white/60 text-sm leading-relaxed">{{ feature.desc }}</p>
+          <h3 class="text-base md:text-lg font-semibold mb-2 md:mb-3">{{ feature.title }}</h3>
+          <p class="text-white/60 text-xs md:text-sm leading-relaxed">{{ feature.desc }}</p>
         </div>
       </div>
     </div>
@@ -72,9 +72,9 @@
     />
 
     <!-- FAQ -->
-    <div class="px-12 py-20 max-w-[800px] mx-auto">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold">常见问题</h2>
+    <div class="px-4 md:px-12 py-12 md:py-20 max-w-[1200px] mx-auto">
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold">常见问题</h2>
       </div>
       
       <div 
@@ -83,12 +83,12 @@
         class="bg-white/5 border border-primary/20 rounded-xl mb-3 overflow-hidden"
       >
         <button 
-          class="w-full px-6 py-5 text-left text-sm flex justify-between items-center hover:bg-white/5 transition-colors"
+          class="w-full px-4 md:px-6 py-4 md:py-5 text-left text-sm flex justify-between items-center hover:bg-white/5 transition-colors"
           @click="toggleFaq(index)"
         >
-          <span>{{ faq.question }}</span>
+          <span class="pr-2">{{ faq.question }}</span>
           <span 
-            class="text-white/50 text-xl transition-transform duration-200"
+            class="text-white/50 text-lg md:text-xl transition-transform duration-200 flex-shrink-0"
             :class="{ 'rotate-45': openFaq === index }"
           >+</span>
         </button>
@@ -96,7 +96,7 @@
           class="overflow-hidden transition-all duration-300"
           :style="{ maxHeight: openFaq === index ? '200px' : '0' }"
         >
-          <p class="px-6 pb-5 text-white/60 text-sm leading-relaxed">{{ faq.answer }}</p>
+          <p class="px-4 md:px-6 pb-4 md:pb-5 text-white/60 text-sm leading-relaxed">{{ faq.answer }}</p>
         </div>
       </div>
     </div>

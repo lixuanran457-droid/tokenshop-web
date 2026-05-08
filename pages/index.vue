@@ -18,7 +18,7 @@
         通过统一 API 接口，无缝访问 GPT-4、Claude、Gemini、DeepSeek 等顶级大模型。稳定、快速、值得信赖。
       </p>
       
-      <div class="flex flex-col sm:flex-row gap-3 md:gap-4 relative w-full max-w-xs sm:max-w-none">
+      <div class="flex flex-col sm:flex-row gap-3 md:gap-4 relative justify-center">
         <button 
           class="px-6 md:px-8 py-3 md:py-3.5 bg-gradient-to-r from-primary to-secondary rounded-xl text-sm md:text-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-0.5 w-full sm:w-auto"
           @click="showLoginModal = true"

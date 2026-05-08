@@ -1,0 +1,43 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2024-11-01',
+  devtools: { enabled: true },
+  
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@vant/nuxt'
+  ],
+
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'https://api.cococlaw.com/v1'
+    }
+  },
+
+  app: {
+    head: {
+      title: 'COCO CLAW - 直连顶级模型',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: '通过统一 API 接口，无缝访问 GPT-4、Claude、Gemini、DeepSeek 等顶级大模型' }
+      ]
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
+
+  css: [
+    '~/assets/css/main.css'
+  ],
+
+  vite: {
+    css: {
+      postcss: {
+        plugins: [
+          require('tailwindcss'),
+          require('autoprefixer')
+        ]
+      }
+    }
+  }
+})

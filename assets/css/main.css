@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 背景装饰 */
+.bg-decoration {
+  @apply fixed inset-0 pointer-events-none z-0 overflow-hidden;
+}
+
+.bg-orb {
+  @apply absolute rounded-full blur-3xl opacity-40;
+}
+
+.bg-orb-1 {
+  @apply w-[600px] h-[600px];
+  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+  top: -200px;
+  right: -100px;
+  animation: float1 15s ease-in-out infinite;
+}
+
+.bg-orb-2 {
+  @apply w-[500px] h-[500px];
+  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  bottom: -150px;
+  left: -100px;
+  animation: float2 18s ease-in-out infinite;
+}
+
+.bg-orb-3 {
+  @apply w-[400px] h-[400px];
+  background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: float3 20s ease-in-out infinite;
+  opacity: 0.2;
+}
+
+.bg-grid {
+  @apply absolute inset-0;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 30px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, -20px); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* 页面过渡动画 */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+/* 代码块样式 */
+.code-block {
+  @apply bg-black/30 border border-primary/20 rounded-lg p-4 overflow-x-auto;
+}
+
+.code-block code {
+  @apply font-mono text-sm text-primary-light;
+}
+
+/* 模型Logo */
+.model-logo {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden;
+}
+
+.model-logo svg {
+  @apply w-8 h-8;
+}
+
+/* 热门标签 */
+.popular-tag {
+  @apply absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent px-3 py-1 rounded-full text-xs font-semibold;
+}
